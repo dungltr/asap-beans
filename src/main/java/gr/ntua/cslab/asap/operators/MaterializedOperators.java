@@ -17,6 +17,7 @@
 
 package gr.ntua.cslab.asap.operators;
 
+import gr.ntua.cslab.asap.utils.ReadMatrixCSV;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +29,170 @@ public class MaterializedOperators {
 	
 	public MaterializedOperators() {
 		operators = new ArrayList<Operator>();
+                String OperatorFolder = "/home/ubuntu/IReS-Platform/asap-platform/asap-server/target/asapLibrary/operators";
 
-		Operator op = new Operator("HBase_HashJoin", "/tmp");
+		String nameOp = "Move_TPCH_Hive_Postgres";
+                Operator move_tpch_hive_postgres = new Operator(nameOp,"/tmp");
+                move_tpch_hive_postgres.add("Constraints.Input.number","1");
+		move_tpch_hive_postgres.add("Constraints.Output.number","1");
+		move_tpch_hive_postgres.add("Constraints.Input0.DataInfo.Attributes.number","1");
+		move_tpch_hive_postgres.add("Constraints.Input0.DataInfo.Attributes.Atr1.type","SQL");
+//		move_tpch_hive_postgres.add("Constraints.Input0.DataInfo.Attributes.Atr2.type","Varchar");
+//               move_tpch_hive_postgres.add("Constraints.Input0.DataInfo.Attributes.Atr3.type","Varchar");
+//		move_tpch_hive_postgres.add("Constraints.Input0.DataInfo.Attributes.Atr4.type","Varchar");
+//		move_tpch_hive_postgres.add("Constraints.Input0.Engine.DB.Relational.MySQL.schema","...");
+//		move_tpch_hive_postgres.add("Constraints.Input0.Engine.DB.Relational.MySQL.location","127.0.0.1");
+
+		move_tpch_hive_postgres.add("Constraints.Output0.DataInfo.Attributes.number","1");
+		move_tpch_hive_postgres.add("Constraints.Output0.DataInfo.Attributes.Atr1.type","SQL");
+//		move_tpch_hive_postgres.add("Constraints.Output0.DataInfo.Attributes.Atr2.type","Varchar");
+//		move_tpch_hive_postgres.add("Constraints.Output0.Engine.DB.NoSQL.HBase.key","Atr1");
+//		move_tpch_hive_postgres.add("Constraints.Output0.Engine.DB.NoSQL.HBase.value","Atr2");
+//		move_tpch_hive_postgres.add("Constraints.Output0.Engine.DB.NoSQL.HBase.location","127.0.0.1");
+//		System.out.println("\nDirectory:begin-------------------------");
+		move_tpch_hive_postgres.add("Constraints.OpSpecification.Algorithm.name","move");
+//		move_tpch_hive_postgres.add("Constraints.EngineSpecification.Centralized.Java.location", "127.0.0.1");
+                double[][] estimateValue = ReadMatrixCSV.readMatrix(OperatorFolder+"/"+nameOp+"/data/no_delay_training_estimate.csv",1);
+		move_tpch_hive_postgres.add("Optimization.execTime", Double.toString(estimateValue[estimateValue.length-1][estimateValue[0].length-1]));
+		move_tpch_hive_postgres.add("Optimization.cost", Double.toString(estimateValue[estimateValue.length-1][estimateValue[0].length-1]/10)); 
+                operators.add(move_tpch_hive_postgres);
+                
+                nameOp = "Move_TPCH_Postgres_Hive";
+                Operator move_tpch_postgres_hive = new Operator(nameOp,"/tmp");
+                move_tpch_postgres_hive.add("Constraints.Input.number","1");
+		move_tpch_postgres_hive.add("Constraints.Output.number","1");
+		move_tpch_postgres_hive.add("Constraints.Input0.DataInfo.Attributes.number","1");
+		move_tpch_postgres_hive.add("Constraints.Input0.DataInfo.Attributes.Atr1.type","SQL");
+//		move_tpch_postgres_hive.add("Constraints.Input0.DataInfo.Attributes.Atr2.type","Varchar");
+//                move_tpch_postgres_hive.add("Constraints.Input0.DataInfo.Attributes.Atr3.type","Varchar");
+//		move_tpch_postgres_hive.add("Constraints.Input0.DataInfo.Attributes.Atr4.type","Varchar");
+//		move_tpch_postgres_hive.add("Constraints.Input0.Engine.DB.Relational.MySQL.schema","...");
+//		move_tpch_postgres_hive.add("Constraints.Input0.Engine.DB.Relational.MySQL.location","127.0.0.1");
+
+		move_tpch_postgres_hive.add("Constraints.Output0.DataInfo.Attributes.number","1");
+		move_tpch_postgres_hive.add("Constraints.Output0.DataInfo.Attributes.Atr1.type","SQL");
+//		move_tpch_postgres_hive.add("Constraints.Output0.DataInfo.Attributes.Atr2.type","List<ByteWritable>");
+//		move_tpch_postgres_hive.add("Constraints.Output0.Engine.DB.NoSQL.HBase.key","Atr1");
+//		move_tpch_postgres_hive.add("Constraints.Output0.Engine.DB.NoSQL.HBase.value","Atr2");
+//		move_tpch_postgres_hive.add("Constraints.Output0.Engine.DB.NoSQL.HBase.location","127.0.0.1");
+		move_tpch_postgres_hive.add("Constraints.OpSpecification.Algorithm.name","move");
+//		move_tpch_postgres_hive.add("Constraints.EngineSpecification.Centralized.Java.location", "127.0.0.1");
+                estimateValue = ReadMatrixCSV.readMatrix(OperatorFolder+"/"+nameOp+"/data/no_delay_training_estimate.csv",1);
+		move_tpch_postgres_hive.add("Optimization.execTime", Double.toString(estimateValue[estimateValue.length-1][estimateValue[0].length-1]));              
+		move_tpch_postgres_hive.add("Optimization.cost", Double.toString(estimateValue[estimateValue.length-1][estimateValue[0].length-1]/10));              
+		operators.add(move_tpch_postgres_hive);
+/*                
+                nameOp = "Move_TPCH_Hive_Hive";
+                Operator move_tpch_hive_hive = new Operator(nameOp,"/tmp");
+                move_tpch_hive_hive.add("Constraints.Input.number","1");
+		move_tpch_hive_hive.add("Constraints.Output.number","1");
+		move_tpch_hive_hive.add("Constraints.Input0.DataInfo.Attributes.number","2");
+		move_tpch_hive_hive.add("Constraints.Input0.DataInfo.Attributes.Atr1.type","Varchar");
+		move_tpch_hive_hive.add("Constraints.Input0.DataInfo.Attributes.Atr2.type","Varchar");
+		move_tpch_hive_hive.add("Constraints.Input0.Engine.DB.Relational.MySQL.schema","...");
+		move_tpch_hive_hive.add("Constraints.Input0.Engine.DB.Relational.MySQL.location","127.0.0.1");
+
+		move_tpch_hive_hive.add("Constraints.Output0.DataInfo.Attributes.number","2");
+		move_tpch_hive_hive.add("Constraints.Output0.DataInfo.Attributes.Atr1.type","ByteWritable");
+		move_tpch_hive_hive.add("Constraints.Output0.DataInfo.Attributes.Atr2.type","List<ByteWritable>");
+		move_tpch_hive_hive.add("Constraints.Output0.Engine.DB.NoSQL.HBase.key","Atr1");
+		move_tpch_hive_hive.add("Constraints.Output0.Engine.DB.NoSQL.HBase.value","Atr2");
+		move_tpch_hive_hive.add("Constraints.Output0.Engine.DB.NoSQL.HBase.location","127.0.0.1");
+		move_tpch_hive_hive.add("Constraints.OpSpecification.Algorithm.Move","");
+		move_tpch_hive_hive.add("Constraints.EngineSpecification.Centralized.Java.location", "127.0.0.1");
+                estimateValue = ReadMatrixCSV.readMatrix(OperatorFolder+"/"+nameOp+"/data/no_delay_training_estimate.csv",1);
+		move_tpch_hive_hive.add("Optimization.execTime", "1.0");//Double.toString(estimateValue[estimateValue.length-1][estimateValue[0].length-1]));              
+		move_tpch_hive_hive.add("Optimization.cost", "1.0");//Double.toString(estimateValue[estimateValue.length-1][estimateValue[0].length-1]/10);              
+		operators.add(move_tpch_hive_hive);
+                
+                nameOp = "Move_TPCH_Postgres_Postgres";
+                Operator move_tpch_postgres_postgres = new Operator(nameOp,"/tmp");
+                move_tpch_postgres_postgres.add("Constraints.Input.number","1");
+		move_tpch_postgres_postgres.add("Constraints.Output.number","1");
+		move_tpch_postgres_postgres.add("Constraints.Input0.DataInfo.Attributes.number","4");
+		move_tpch_postgres_postgres.add("Constraints.Input0.DataInfo.Attributes.Atr1.type","Varchar");
+		move_tpch_postgres_postgres.add("Constraints.Input0.DataInfo.Attributes.Atr2.type","Varchar");
+                move_tpch_postgres_postgres.add("Constraints.Input0.DataInfo.Attributes.Atr3.type","Varchar");
+		move_tpch_postgres_postgres.add("Constraints.Input0.DataInfo.Attributes.Atr4.type","Varchar");
+		move_tpch_postgres_postgres.add("Constraints.Input0.Engine.DB.Relational.MySQL.schema","...");
+		move_tpch_postgres_postgres.add("Constraints.Input0.Engine.DB.Relational.MySQL.location","127.0.0.1");
+
+		move_tpch_postgres_postgres.add("Constraints.Output0.DataInfo.Attributes.number","2");
+		move_tpch_postgres_postgres.add("Constraints.Output0.DataInfo.Attributes.Atr1.type","ByteWritable");
+		move_tpch_postgres_postgres.add("Constraints.Output0.DataInfo.Attributes.Atr2.type","List<ByteWritable>");
+		move_tpch_postgres_postgres.add("Constraints.Output0.Engine.DB.NoSQL.HBase.key","Atr1");
+		move_tpch_postgres_postgres.add("Constraints.Output0.Engine.DB.NoSQL.HBase.value","Atr2");
+		move_tpch_postgres_postgres.add("Constraints.Output0.Engine.DB.NoSQL.HBase.location","127.0.0.1");
+		move_tpch_postgres_postgres.add("Constraints.OpSpecification.Algorithm.Move","");
+		move_tpch_postgres_postgres.add("Constraints.EngineSpecification.Centralized.Java.location", "127.0.0.1");
+                estimateValue = ReadMatrixCSV.readMatrix(OperatorFolder+"/"+nameOp+"/data/no_delay_training_estimate.csv",1);
+		move_tpch_postgres_postgres.add("Optimization.execTime", "1.0");//Double.toString(estimateValue[estimateValue.length-1][estimateValue[0].length-1]));              
+		move_tpch_postgres_postgres.add("Optimization.cost", "1.0");//Double.toString(estimateValue[estimateValue.length-1][estimateValue[0].length-1]/10);              
+		operators.add(move_tpch_postgres_postgres);
+                
+                nameOp = "Join_TPCH_Hive_Hive";
+                Operator join_tpch_hive_hive = new Operator(nameOp, "/tmp");
+		join_tpch_hive_hive.add("Constraints.Input.number","2");
+		join_tpch_hive_hive.add("Constraints.Output.number","1");
+		join_tpch_hive_hive.add("Constraints.Input0.DataInfo.Attributes.number","2");
+		join_tpch_hive_hive.add("Constraints.Input0.DataInfo.Attributes.Atr1.type","Varchar");
+		join_tpch_hive_hive.add("Constraints.Input0.DataInfo.Attributes.Atr2.type","Varchar");
+		join_tpch_hive_hive.add("Constraints.Input0.Engine.DB.NoSQL.HBase.key","Atr1");
+		join_tpch_hive_hive.add("Constraints.Input0.Engine.DB.NoSQL.HBase.value","Atr2");
+		join_tpch_hive_hive.add("Constraints.Input0.Engine.DB.NoSQL.HBase.location","127.0.0.1");
+		
+		join_tpch_hive_hive.add("Constraints.Input1.DataInfo.Attributes.number","2");
+		join_tpch_hive_hive.add("Constraints.Input1.DataInfo.Attributes.Atr1.type","Varchar");
+		join_tpch_hive_hive.add("Constraints.Input1.DataInfo.Attributes.Atr2.type","Varchar");
+		join_tpch_hive_hive.add("Constraints.Input1.Engine.DB.Relational.MySQL.schema","...");
+		join_tpch_hive_hive.add("Constraints.Input1.Engine.DB.Relational.MySQL.location","127.0.0.1");
+
+		join_tpch_hive_hive.add("Constraints.Output0.DataInfo.Attributes.number","1");
+		join_tpch_hive_hive.add("Constraints.Output0.DataInfo.Attributes.Atr1.type","Varchar");
+		join_tpch_hive_hive.add("Constraints.Output0.Engine.DB.NoSQL.HBase.key","Atr1");
+		join_tpch_hive_hive.add("Constraints.Output0.Engine.DB.NoSQL.HBase.location","127.0.0.1");
+		
+		join_tpch_hive_hive.add("Constraints.OpSpecification.Algorithm.Join.JoinCondition","in1.atr1 = in2.atr2");
+		join_tpch_hive_hive.add("Constraints.OpSpecification.Algorithm.Join.type", "Join");
+		
+		join_tpch_hive_hive.add("Constraints.EngineSpecification.Centralized.Java.location", "127.0.0.1");
+                estimateValue = ReadMatrixCSV.readMatrix(OperatorFolder+"/"+nameOp+"/data/no_delay_training_estimate.csv",1);
+		join_tpch_hive_hive.add("Optimization.execTime", "1.0");//Double.toString(estimateValue[estimateValue.length-1][estimateValue[0].length-1]));              
+		join_tpch_hive_hive.add("Optimization.cost", "1.0");//Double.toString(estimateValue[estimateValue.length-1][estimateValue[0].length-1]/10);              
+		operators.add(join_tpch_hive_hive);
+                
+                nameOp = "Join_TPCH_Postgres_Postgres";
+                Operator join_tpch_postgres_postgres = new Operator(nameOp, "/tmp");
+		join_tpch_postgres_postgres.add("Constraints.Input.number","2");
+		join_tpch_postgres_postgres.add("Constraints.Output.number","1");
+		join_tpch_postgres_postgres.add("Constraints.Input0.DataInfo.Attributes.number","2");
+		join_tpch_postgres_postgres.add("Constraints.Input0.DataInfo.Attributes.Atr1.type","Varchar");
+		join_tpch_postgres_postgres.add("Constraints.Input0.DataInfo.Attributes.Atr2.type","Varchar");
+		join_tpch_postgres_postgres.add("Constraints.Input0.Engine.DB.NoSQL.HBase.key","Atr1");
+		join_tpch_postgres_postgres.add("Constraints.Input0.Engine.DB.NoSQL.HBase.value","Atr2");
+		join_tpch_postgres_postgres.add("Constraints.Input0.Engine.DB.NoSQL.HBase.location","127.0.0.1");
+		
+		join_tpch_postgres_postgres.add("Constraints.Input1.DataInfo.Attributes.number","2");
+		join_tpch_postgres_postgres.add("Constraints.Input1.DataInfo.Attributes.Atr1.type","Varchar");
+		join_tpch_postgres_postgres.add("Constraints.Input1.DataInfo.Attributes.Atr2.type","Varchar");
+		join_tpch_postgres_postgres.add("Constraints.Input1.Engine.DB.Relational.MySQL.schema","...");
+		join_tpch_postgres_postgres.add("Constraints.Input1.Engine.DB.Relational.MySQL.location","127.0.0.1");
+
+		join_tpch_postgres_postgres.add("Constraints.Output0.DataInfo.Attributes.number","1");
+		join_tpch_postgres_postgres.add("Constraints.Output0.DataInfo.Attributes.Atr1.type","Varchar");
+		join_tpch_postgres_postgres.add("Constraints.Output0.Engine.DB.NoSQL.HBase.key","Atr1");
+		join_tpch_postgres_postgres.add("Constraints.Output0.Engine.DB.NoSQL.HBase.location","127.0.0.1");
+		
+		join_tpch_postgres_postgres.add("Constraints.OpSpecification.Algorithm.Join.JoinCondition","in1.atr1 = in2.atr2");
+		join_tpch_postgres_postgres.add("Constraints.OpSpecification.Algorithm.Join.type", "Join");
+		
+		join_tpch_postgres_postgres.add("Constraints.EngineSpecification.Centralized.Java.location", "127.0.0.1");
+                estimateValue = ReadMatrixCSV.readMatrix(OperatorFolder+"/"+nameOp+"/data/no_delay_training_estimate.csv",1);
+		join_tpch_postgres_postgres.add("Optimization.execTime", "1.0");//Double.toString(estimateValue[estimateValue.length-1][estimateValue[0].length-1]));              
+		join_tpch_postgres_postgres.add("Optimization.cost", "1.0");//Double.toString(estimateValue[estimateValue.length-1][estimateValue[0].length-1]/10);              
+		operators.add(join_tpch_postgres_postgres);
+*/
+/*		Operator op = new Operator("HBase_HashJoin", "/tmp");
 		op.add("Constraints.Input.number","2");
 		op.add("Constraints.Output.number","1");
 		op.add("Constraints.Input0.DataInfo.Attributes.number","2");
@@ -160,7 +323,7 @@ public class MaterializedOperators {
 		operators.add(sort);
 		operators.add(sort2);
 		operators.add(move);
-		
+*/		
 		
 	}
 

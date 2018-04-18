@@ -40,7 +40,8 @@ public class MultiObjectiveOptimizer extends AbstractProblem {
     protected static String policy;
 
     public MultiObjectiveOptimizer() {
-        super(variables.size(), 1);
+        //super(variables.size(), 1);
+        super(variables.size(), 2);//Dung edit
     }
 
     @Override

@@ -242,7 +242,9 @@ public class WorkflowNode implements Comparable<WorkflowNode>{
 							
 						for(WorkflowNode in : materializedInputs.get(i)){
 							logger.info("CHECKING Move DATASET: "+in.dataset.datasetName);
-							
+							/*Dung edit*/
+							//System.out.println("CHECKING Move DATASET: "+in.dataset.datasetName);
+                                                        /*Dung edit*/
 							if(! tempInput.checkMatch(in.dataset)){
 								//check move
 								//generic move
@@ -254,27 +256,34 @@ public class WorkflowNode implements Comparable<WorkflowNode>{
 										WorkflowNode moveNode = new WorkflowNode(true, false,"");
 										moveNode.setOperator(m);
 										logger.info( "Move node found:\n" + m.opName);
+										/*Dung edit*/
+                                                                                //System.out.println("Move node found:\n" + m.opName);
+                                                                                /*Dung edit*/
 										moveNode.addInput(in);
 										List<WorkflowNode> lin= new ArrayList<WorkflowNode>();
 										lin.add(in);
 										tempInputNode.addInput(moveNode);
 										HashMap<String, Double> prevMetrics = dpTable.getMetrics(in.dataset);
 										Double prevCost = computePolicyFunction(prevMetrics, materializedWorkflow.function);
+										/*Dung edit*/
+                                                                                //System.out.println("Double prevCost = computePolicyFunction("+prevMetrics+", "+materializedWorkflow.function+"):" + prevCost);
+                                                                                /*Dung edit*/
 										HashMap<String,Double> nextMetrics = m.getOptimalPolicyCost(prevMetrics, lin, materializedWorkflow.function);
 
 										m.generateOptimizationMetrics(tempInput, 0, nextMetrics);
 
 										Double optCost = computePolicyFunction(nextMetrics, materializedWorkflow.function);
+										/*Dung edit*/
+                                                                                //System.out.println("Double optCost = computePolicyFunction("+nextMetrics+", "+materializedWorkflow.function+"):" + optCost);
+                                                                                /*Dung edit*/
 										moveNode.setOptimalCost(optCost-prevCost);
 
 										moveNode.setExecTime(nextMetrics.get("execTime")-prevMetrics.get("execTime"));
-                                                                                //////////////////////////Dung modify the following code////////////////////////////////////////////////////
-                                                                                operator.reConfigureModel();
-                                                                              
-                                                                                //////////////////////////End of code of Dung modify //////////////////////////////////////////////////////
 										//moveNode.setOptimalCost(m.getMettric(metric, moveNode.inputs));
 										Double tempCost = dpTable.getCost(in.dataset)+moveNode.getCost();
-
+										/*Dung edit*/
+                                                                                //System.out.println("Double tempCost = dpTable.getCost("+in.dataset+")+moveNode.getCost()" + tempCost);
+                                                                                /*Dung edit*/
 										if(materializedWorkflow.functionTarget.contains("min") && tempCost<=operatorOneInputCost){
 											operatorOneInputCost=tempCost;
 											/*HashMap<String, Double> prevMetrics = dpTable.getMetrics(in.dataset);
@@ -304,8 +313,11 @@ public class WorkflowNode implements Comparable<WorkflowNode>{
 												if(prevMetrics.containsKey(e.getKey())){
 													oneInputMetrics.put(e.getKey(),e.getValue());
 												}
-									        }
+									        	}
 											bestInput=moveNode;
+											/*Dung edit*/
+                                                                                        //System.out.println("bestInput=moveNode="+moveNode);
+                                                                                        /*Dung edit*/
 										}
 									}
 								}
@@ -340,6 +352,9 @@ public class WorkflowNode implements Comparable<WorkflowNode>{
 						for(WorkflowNode bin : bestInputs){
 							WorkflowNode tin = temp.inputs.get(i);
 							logger.info("copy path from: "+bin.getName()+" to "+tin.getName());
+							/*Dung edit*/
+                                                        //System.out.println("copy path from: "+bin.getName()+" to "+tin.getName());
+                                                        /*Dung edit*/
 							if(bin.isOperator){
 								//move
 								System.out.println("Move!! "+bin.inputs.get(0).dataset.datasetName+" "+tin.getName());
@@ -394,10 +409,17 @@ public class WorkflowNode implements Comparable<WorkflowNode>{
 									t1.add(h.get(m));
 								}
 								Collections.sort(t1);
+								/*Dung edit*/
+								//System.out.println("m+: +t1");
 								//System.out.println(m+": "+t1);
+								//System.out.println("minCostsForInput");
 								//System.out.println(minCostsForInput);
+								/*Dung edit*/
 								String g = materializedWorkflow.groupInputs.get(m);
+								/*Dung edit*/
+								//System.out.println("g = materializedWorkflow.groupInputs.get(m);");
 								//System.out.println(g);
+								/*Dung edit*/
 								Double operatorInputCost=0.0;
 								if(g.contains("min")){
 									operatorInputCost=t1.get(0);
@@ -427,8 +449,13 @@ public class WorkflowNode implements Comparable<WorkflowNode>{
 						prevCost 	= computePolicyFunction(bestInputMetrics, materializedWorkflow.function);
 						nextMetrics = op.getOptimalPolicyCost(bestInputMetrics, bestInputs, materializedWorkflow.function);
 						
-						
 						optCost = computePolicyFunction(nextMetrics, materializedWorkflow.function);
+								/*Dung edit*/
+						//System.out.println("prevCost        = computePolicyFunction(bestInputMetrics, materializedWorkflow.function);"+prevCost);
+						//System.out.println("nextMetrics = op.getOptimalPolicyCost(bestInputMetrics, bestInputs, materializedWorkflow.function);"+nextMetrics);
+						//System.out.println("optCost = computePolicyFunction(nextMetrics, materializedWorkflow.function)"+optCost);
+								/*Dung edit*/
+						
 						
 
 						temp.setExecTime(nextMetrics.get("execTime")-bestInputMetrics.get("execTime"));
@@ -448,6 +475,9 @@ public class WorkflowNode implements Comparable<WorkflowNode>{
 						Dataset tempOutput = null;
 						//System.out.println(fromName);
 						logger.info( "Outputs are: " + outputs);
+						/*Dung edit*/
+                                                //System.out.println("Outputs are: " + outputs);
+                                                /*Dung edit*/
 						for (WorkflowNode out : outputs) {
 							tempOutputNode = new WorkflowNode(false, false,"");
 							tempOutput = new Dataset("t"+materializedWorkflow.count);
@@ -457,6 +487,13 @@ public class WorkflowNode implements Comparable<WorkflowNode>{
                             logger.info( "outN: " + outN);
                             logger.info( "nextMetrics: " + nextMetrics);
                             logger.info( "temp.inputs: " + temp.inputs);
+			    /*Dung edit*/
+                            //System.out.println( "Call outputFor() for operator: " + op.opName);
+                            //System.out.println( "with tempOutput: " + tempOutput);
+                            //System.out.println( "outN: " + outN);
+                            //System.out.println( "nextMetrics: " + nextMetrics);
+                            //System.out.println( "temp.inputs: " + temp.inputs);
+                            /*Dung edit*/
                             try{
 								op.outputFor(tempOutput, outN, nextMetrics, temp.inputs);
                             }
@@ -536,7 +573,11 @@ public class WorkflowNode implements Comparable<WorkflowNode>{
 				}
 
 				dpTable.addInputs(dataset, plan, computePolicyFunction(metrics, materializedWorkflow.function),metrics);
-
+				System.out.println("dpTable.addInputs(dataset, plan, computePolicyFunction(metrics, materializedWorkflow.function),metrics");
+                                System.out.println("dataset:="+ dataset);
+                                System.out.println("plan:="+ plan);
+                                System.out.println("metrics:="+ metrics);
+                                System.out.println("materializedWorkflow.function:="+ materializedWorkflow.function);
 			}
 		}//end of else WorkflowNode is dataset
 		logger.info( "Processed : " + toStringNorecursive());

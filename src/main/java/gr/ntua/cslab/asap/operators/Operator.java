@@ -38,17 +38,7 @@ import gr.ntua.ece.cslab.panic.core.utils.CSVFileManager;
 import net.sourceforge.jeval.EvaluationException;
 import net.sourceforge.jeval.Evaluator;
 
-import java.io.BufferedWriter;
-import java.io.ByteArrayInputStream;
-import java.io.EOFException;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -66,7 +56,7 @@ public class Operator {
 	public SpecTree optree;
 	public String opName;
 	private DataSource dataSource;
-	private Model bestModel;
+	//private Model bestModel;
 	private double minTotalError;
 	private static Logger logger = Logger.getLogger(Operator.class.getName());
 	public String directory;
@@ -227,7 +217,7 @@ public class Operator {
 			if(optree.getNode("Optimization.outputSpace")!=null)
 				optree.getNode("Optimization.outputSpace").toKeyValues("", outputSpace);
 		}
-		catch( NullPointerException npe){
+		catch( NullPointerException npe ){
 			System.out.println( "ERROR: From operator " + opName + "'s description file either"
 								+ " Optimization.inputSpace or Optimization.outputSpace"
 								+ " parameter or both are missing. Add them appropriately.");
@@ -240,18 +230,46 @@ public class Operator {
 		inputSource = optree.getParameter("Optimization.inputSource.type");
 		minTotalError = Double.MAX_VALUE;
 
+		logger.info("Metrics for operator " + opName);
+		for (String metric : outputSpace.keySet()) {
+			logger.info("--"+metric);
+		}
+
 		for (Entry<String, String> e : outputSpace.entrySet()) {
-			performanceModels = new ArrayList<Model>();
+			Model bestModel = null;
+			logger.info("Configuring model for metric: "+e.getKey());
+
+			performanceModels = new ArrayList<>();
 			modelClass = optree.getParameter("Optimization.model." + e.getKey());
+
 			if (modelClass.contains("AbstractWekaModel")) {
-				String modelDir = directory + "/models";
-				File modelFile = new File(modelDir);
-				if (modelFile.exists()) {
-					File[] listOfFiles = modelFile.listFiles();
-					for (int i = 0; i < listOfFiles.length; i++) {
-						if (listOfFiles[i].toString().endsWith(".model")) {
+				String modelDirPath = directory + "/models";
+				File modelDir = new File(modelDirPath);
+
+				/* Current metric's name */
+				final String metricName = e.getKey();
+
+				/* Keeps the models for the specific metric (eg. execTime) */
+				File[] metricModels = modelDir.listFiles(new FilenameFilter() {
+					@Override
+					public boolean accept(File file, String name) {
+						return name.startsWith(metricName);
+					}
+				});
+
+				if (metricModels != null)
+					logger.info(metricModels.length + " models found for metric: " + e.getKey());
+				else
+					logger.info("No models found for metric: "+e.getKey());
+
+				if (modelDir.exists() && metricModels != null &&metricModels.length > 0) {
+					for (File file : metricModels) {
+						if (file.getName().endsWith(".model")) {
 							try{
-								performanceModels.add(AbstractWekaModel.readFromFile(listOfFiles[i].getAbsolutePath()));	
+								String path = file.getAbsolutePath();
+								logger.info("Adding model "+path + " for metric "
+										+ metricName + " for operator " + opName);
+								performanceModels.add(AbstractWekaModel.readFromFile(file.getAbsolutePath()));
 							}
 							catch( EOFException eofe){
 								logger.info( "ERROR: There is a problem with the already existing models of");
@@ -272,30 +290,26 @@ public class Operator {
 							}
 						}
 					}
-				} else {
+				}
+				else {
+					System.out.println("Bulding model for metric: " + metricName + " for operator " + opName);
+					logger.info("Bulding model for metric: " + metricName + " for operator " + opName);
 					int i = 0;
                     if (inputSource != null && inputSource.equalsIgnoreCase("mongodb")) {
-                    	logger.info("MONGO");
+                    	logger.info("The datasource for metric " + metricName +
+								" of operator " + opName + " is MongoDB");
+
                         this.initializeDatasource();
                         outPoints = dataSource.getOutputSpacePoints(e.getKey());
-//                        PrintWriter writer = new PrintWriter(this.opName+".csv", "UTF-8");
-////                        for(OutputSpacePoint o: outPoints){
-////                        	o.
-////                        	writer.println();
-////                        }
-//                        writer.println("The first line");
-//                        writer.println("The second line");
-//                        writer.close();
-                        //System.out.println(outPoints);
                     }
                     else {
-                    	logger.info("CSV");
+						logger.info("The datasource for metric " + metricName +
+								" of operator " + opName + " is CSV");
+
                         CSVFileManager file = new CSVFileManager();
                         file.setFilename(directory + "/data/" + e.getKey() + ".csv");
                         for (InputSpacePoint in : file.getInputSpacePoints()) {
                         	OutputSpacePoint out = file.getActualValue(in);
-                        	//logger.info( "InputSpacePoint is: " + in);
-                            //logger.info( "OutputSpacePoint is: " + file.getActualValue(in));
                             outPoints.add(out);
                         }
                     }
@@ -369,8 +383,9 @@ public class Operator {
 						i++;
 					}
                     if(bestModel!=null){
-                    	modelFile.mkdir();
-						bestModel.serialize(modelDir + "/" + e.getKey() + "_" + i + ".model");
+						modelDir.mkdir();
+						String modelPath = modelDir + "/" + e.getKey() + "_" + i + ".model";
+						bestModel.serialize(modelPath);
 						performanceModels.add(bestModel);
                     }
 				}
@@ -391,6 +406,15 @@ public class Operator {
 			}
 			models.put(e.getKey(), performanceModels);
 		}
+
+		/* DELETE THIS
+		System.out.println("Models for operator "+this.opName);
+		for (Entry<String, List<Model>> entry : models.entrySet()) {
+			System.out.println(entry.getKey());
+			for (Model m : entry.getValue()) {
+				System.out.println(m);
+			}
+		}*/
 	}
 
     public void initializeDatasource(){
@@ -671,11 +695,17 @@ public class Operator {
         logger.info( "dataset: " + d.datasetName);
         logger.info( "at position: " + position);
         logger.info( "and inputs: " + inputs);
-        SpecTreeNode variables = optree.getNode("Execution.Output" + position);
+	System.out.println("Copying execution parameters for" );
+        System.out.println("dataset: " + d.datasetName);
+        System.out.println("at position: " + position);
+        System.out.println("and inputs: " + inputs);
+        
+	SpecTreeNode variables = optree.getNode("Execution.Output" + position);
 		HashMap<String, String> val = new HashMap<String, String>();
 		variables.toKeyValues("", val);
         logger.info( "Execution variables are: " + variables);
-        try{
+        System.out.println("Execution variables are: " + variables);
+	try{
 			for (Entry<String, String> e : val.entrySet()) {
 				if (e.getKey().equals("path")) {
 					copyExecPath(d, e.getValue());
@@ -908,11 +938,11 @@ public class Operator {
 		}
 		else{
 			for(String metric : outputSpace.keySet()){
-				Double v= getMettric(metric,inputs);
+				Double v = getMettric(metric,inputs);
 				retMetrics.put(metric, v);
 			}
 		}
-		
+		System.out.println("Output metrics: " + retMetrics);
 		logger.info("Output metrics: " + retMetrics);
 		
 		
@@ -966,6 +996,7 @@ public class Operator {
 	}
 	
 	public Double getMettric(String metric, List<WorkflowNode> inputs) throws Exception {
+		System.out.println("Getting mettric: " + metric + " from operator: " + opName);
 		logger.info("Getting mettric: " + metric + " from operator: " + opName);
 		//System.out.println(metric);
 		if(models.get(metric)==null || models.get(metric).size()==0){
@@ -988,6 +1019,8 @@ public class Operator {
 			}
 		}
 		logger.info("Model selected: " + model.getClass());
+		System.out.println("Model selected: " + model.getClass());
+
 		//System.out.println(opName);
 		//System.out.println("inputs: "+inputs);
 
@@ -1041,7 +1074,7 @@ public class Operator {
 	}
 
 	public Double getCost(List<WorkflowNode> inputs) throws NumberFormatException, EvaluationException {
-
+		System.out.println("Getting cost for op: "+opName);
 		logger.info("Compute cost Operator " + opName);
 		logger.info("inputs: " + inputs);
 		String value = getParameter("Optimization.execTime");
