@@ -402,4 +402,23 @@ public class dream {
         double R_2_2 = SSR/SST;
         return R_2_2;
     }
+     public static void printMatrix(double[][] a) {
+        int m = a.length;
+        int n = a[0].length;
+        for (int i = 0; i < m; i++){
+            for (int j = 0; j < n; j++)
+            {
+                System.out.printf("%.2f",a[i][j]);
+                System.out.print(" ");
+            }    
+            System.out.println(); 
+        }        
+    }
+    public static void printArray(double[] a) {
+        int m = a.length;
+        for (int i = 0; i < m; i++){
+                System.out.printf("%.2f",a[i]);
+                System.out.print(" ");
+        }        
+    }
 }
