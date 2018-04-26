@@ -8,6 +8,9 @@ package gr.ntua.cslab.asap.utils;
 import java.io.IOException;
 import gr.ntua.cslab.asap.utils.ReadMatrixCSV;
 import static gr.ntua.cslab.asap.utils.ReadMatrixCSV.readMatrix;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  *
@@ -420,5 +423,12 @@ public class dream {
                 System.out.printf("%.2f",a[i]);
                 System.out.print(" ");
         }        
+    }
+    public static void updateParameter(String filename, double[] b) throws IOException{
+        Path filePath = Paths.get(filename);
+        if (!Files.exists(filePath)) {
+            Files.createFile(filePath);
+        }
+        Writematrix2CSV.addArray2Csv(filename, b); 
     }
 }
