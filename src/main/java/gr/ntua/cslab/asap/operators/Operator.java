@@ -125,6 +125,7 @@ public class Operator {
                         for (InputSpacePoint in : file.getInputSpacePoints()) {
                             OutputSpacePoint out = file.getActualValue(in);
                             outPoints.add(out);
+                            System.out.println(out);// Dung edit
                         }    
                         System.out.println(outPoints);
                         for (Class<? extends Model> c : Benchmark.discoverModels()) {
