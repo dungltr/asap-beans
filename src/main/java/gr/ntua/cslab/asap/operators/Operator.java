@@ -24,6 +24,9 @@ import gr.ntua.cslab.asap.utils.DataSource;
 import gr.ntua.cslab.asap.utils.MongoDB;
 import gr.ntua.cslab.asap.utils.ReadFile;
 import gr.ntua.cslab.asap.utils.Utils;
+import gr.ntua.cslab.asap.utils.CsvFileReader;
+import static gr.ntua.cslab.asap.utils.ReadMatrixCSV.readMatrix;
+import static gr.ntua.cslab.asap.utils.dream.estimateSizeOfMatrix;
 import gr.ntua.cslab.asap.workflow.WorkflowNode;
 import gr.ntua.ece.cslab.panic.core.client.Benchmark;
 import gr.ntua.ece.cslab.panic.core.containers.beans.InputSpacePoint;
@@ -122,6 +125,14 @@ public class Operator {
                         //outPoints = dataSource.getOutputSpacePoints(e.getKey());
                         CSVFileManager file = new CSVFileManager();
                         file.setFilename(directory + "/data/" + e.getKey() + ".csv");
+                        //////Dung edit to put DREAM in this step
+                        String fileName = directory + "/data/" + e.getKey() + ".csv";
+                        double R_2_limit = 0.8;
+                        double [][] realValue = readMatrix(fileName, 1);
+                        int variables = realValue[0].length - 1;
+                        int Max_line_estimate = estimateSizeOfMatrix(CsvFileReader.count(fileName)-1,variables,fileName,R_2_limit);
+                        ////////////Dung edit is finish to put DREAM
+                        
                         for (InputSpacePoint in : file.getInputSpacePoints()) {
                             OutputSpacePoint out = file.getActualValue(in);
                             outPoints.add(out);
