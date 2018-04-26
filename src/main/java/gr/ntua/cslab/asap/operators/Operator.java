@@ -25,8 +25,8 @@ import gr.ntua.cslab.asap.utils.MongoDB;
 import gr.ntua.cslab.asap.utils.ReadFile;
 import gr.ntua.cslab.asap.utils.Utils;
 import gr.ntua.cslab.asap.utils.CsvFileReader;
-import static gr.ntua.cslab.asap.utils.ReadMatrixCSV.readMatrix;
-import static gr.ntua.cslab.asap.utils.dream.estimateSizeOfMatrix;
+import gr.ntua.cslab.asap.utils.ReadMatrixCSV;
+import gr.ntua.cslab.asap.utils.dream;
 import gr.ntua.cslab.asap.workflow.WorkflowNode;
 import gr.ntua.ece.cslab.panic.core.client.Benchmark;
 import gr.ntua.ece.cslab.panic.core.containers.beans.InputSpacePoint;
@@ -1063,9 +1063,10 @@ public class Operator {
                     System.out.println("la la la");
                     String fileName = directory + "/data/" + metric + ".csv";
                     double R_2_limit = 0.8;
-                    double [][] realValue = readMatrix(fileName, 1);
+                    double [][] realValue = ReadMatrixCSV.readMatrix(fileName, 1);
+                    dream.printMatrix(realValue);
                     int variables = realValue[0].length - 1;
-                    int Max_line_estimate = estimateSizeOfMatrix(CsvFileReader.count(fileName)-1,variables,fileName,R_2_limit);
+                    int Max_line_estimate = dream.estimateSizeOfMatrix(CsvFileReader.count(fileName)-1,variables,fileName,R_2_limit);
                     System.out.println("the maximum line for UserFunction is: " + Max_line_estimate);
                     System.out.println("la la la");
                 ////////////Dung edit is finish to put DREAM
