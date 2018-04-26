@@ -74,7 +74,7 @@ public class Operator {
 	static String IRES_HOME = ReadFile.readhome("IRES_HOME");
         static String ASAP_HOME = IRES_HOME;
         static String IRES_library = ASAP_HOME+"/asap-platform/asap-server";
-        static String Library = IRES_library+"/target";
+        static String Library=  IRES_library+"/target";
 
 	public Operator(String name, String directory) {
 		optree = new SpecTree();
@@ -1061,8 +1061,8 @@ public class Operator {
                 else {
                     //////Dung edit to put DREAM in this step
                     System.out.println("first lol");
-                    System.out.println("directory:= " + directory);
-                    String fileName = directory + "/data/" + metric + ".csv";
+                    System.out.println("directory:= " +Library + "/"+ directory);
+                    String fileName = Library + "/"+ directory + "/data/" + metric + ".csv";
                     double R_2_limit = 0.8;
                     System.out.println("fileName:= " + fileName);
                     double [][] realValue = ReadMatrixCSV.readMatrix(fileName, 1);
