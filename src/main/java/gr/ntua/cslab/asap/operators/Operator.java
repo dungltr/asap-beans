@@ -1064,11 +1064,11 @@ public class Operator {
                     String fileName = directory + "/data/" + metric + ".csv";
                     double R_2_limit = 0.8;
                     System.out.println("fileName:= " + fileName);
-                    //double [][] realValue = ReadMatrixCSV.readMatrix(fileName, 1);
-                    //dream.printMatrix(realValue);
-                    //int variables = realValue[0].length - 1;
-                    //int Max_line_estimate = dream.estimateSizeOfMatrix(CsvFileReader.count(fileName)-1,variables,fileName,R_2_limit);
-                    //System.out.println("the maximum line for UserFunction is: " + Max_line_estimate);
+                    double [][] realValue = ReadMatrixCSV.readMatrix(fileName, 1);
+                    dream.printMatrix(realValue);
+                    int variables = realValue[0].length - 1;
+                    int Max_line_estimate = dream.estimateSizeOfMatrix(CsvFileReader.count(fileName)-1,variables,fileName,R_2_limit);
+                    System.out.println("the maximum line for UserFunction is: " + Max_line_estimate);
                     System.out.println("ha ha ha");
                 ////////////Dung edit is finish to put DREAM
                 }
