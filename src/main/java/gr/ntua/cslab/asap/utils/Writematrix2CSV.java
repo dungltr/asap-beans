@@ -87,7 +87,7 @@ public class Writematrix2CSV {
         }
     public static void addMatrix2Csv(String filename, double[][] tmp) throws IOException {		
             Path filePath = Paths.get(filename);
-            if (Files.exists(filePath)) Files.delete(filePath);
+            //if (Files.exists(filePath)) Files.delete(filePath);
             if (!Files.exists(filePath)) {
                 Files.createFile(filePath);
                 }
@@ -96,6 +96,19 @@ public class Writematrix2CSV {
             for (int i = 0; i < tmp.length; i++)
             {
                 for (int j = 0; j < tmp[0].length; j++)
+                    abc[j] = tmp[i][j];
+                addArray2Csv(filename, abc);
+            }   
+            
+        }
+     public static void writeMatrix2Csv(String filename, double[][] tmp) throws IOException {		
+            Path filePath = Paths.get(filename);
+            if (Files.exists(filePath)) Files.delete(filePath);       
+            Files.createFile(filePath);
+            double[] abc = new double[tmp[0].length];         
+            for (int i = 0; tmp.length > i; i++)
+            {
+                for (int j = 0; tmp[0].length > j; j++)
                     abc[j] = tmp[i][j];
                 addArray2Csv(filename, abc);
             }   
