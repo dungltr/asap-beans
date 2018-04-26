@@ -1061,6 +1061,7 @@ public class Operator {
                 else {
                     //////Dung edit to put DREAM in this step
                     System.out.println("la la la");
+                    System.out.println("directory:= " + directory);
                     String fileName = directory + "/data/" + metric + ".csv";
                     double R_2_limit = 0.8;
                     System.out.println("fileName:= " + fileName);
