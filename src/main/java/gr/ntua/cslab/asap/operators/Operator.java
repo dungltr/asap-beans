@@ -26,6 +26,7 @@ import gr.ntua.cslab.asap.utils.ReadFile;
 import gr.ntua.cslab.asap.utils.Utils;
 import gr.ntua.cslab.asap.utils.CsvFileReader;
 import gr.ntua.cslab.asap.utils.ReadMatrixCSV;
+import gr.ntua.cslab.asap.utils.Writematrix2CSV;
 import gr.ntua.cslab.asap.utils.dream;
 import gr.ntua.cslab.asap.workflow.WorkflowNode;
 import gr.ntua.ece.cslab.panic.core.client.Benchmark;
@@ -131,19 +132,32 @@ public class Operator {
                         String fileName = Library + "/"+ directory + "/data/" + e.getKey() + ".csv";
                         double R_2_limit = 0.8;
                         System.out.println("fileName:= " + fileName);
-                        double [][] realValue = ReadMatrixCSV.readMatrix(fileName, 1);
-                        dream.printMatrix(realValue);
-                        int variables = realValue[0].length - 1;
-                        int Max_line_estimate = dream.estimateSizeOfMatrix(CsvFileReader.count(fileName)-1,variables,fileName,R_2_limit);
-                        System.out.println("the maximum line for UserFunction is: " + Max_line_estimate);
-                        System.out.println("ha ha ha");
-                        ////////////Dung edit is finish to put DREAM
                         
+                        double [][] testVariable = ReadMatrixCSV.readMatrix(fileName, 1);
+                        int variables = testVariable[0].length - 1;
+                        int maxLine = dream.estimateSizeOfMatrix(CsvFileReader.count(fileName)-1,variables,fileName,R_2_limit);
+                        double [][] realValue = ReadMatrixCSV.readMatrix(fileName, maxLine);
+                        dream.printMatrix(realValue);
+                        double [] M = {maxLine};
+                        dream.updateParameter(fileName.replace(".csv","")+"_maxDream.csv",M);
+                        Writematrix2CSV.writeMatrix2Csv(fileName.replace(".csv","")+"_tmpDream.csv", realValue);
+                        System.out.println("the maximum line for UserFunction is: " + maxLine);                      
+                        System.out.println("ha ha ha");
+                        CSVFileManager fileDung = new CSVFileManager();
+                        fileDung.setFilename(directory + "/data/" + e.getKey() + "_tmpDream.csv");
+                        for (InputSpacePoint in : fileDung.getInputSpacePoints()) {
+                            OutputSpacePoint out = fileDung.getActualValue(in);
+                            outPoints.add(out);
+                            //System.out.println(out);// Dung edit
+                        }                   
+                        ////////////Dung edit is finish to put DREAM                       
+                        /* 
                         for (InputSpacePoint in : file.getInputSpacePoints()) {
                             OutputSpacePoint out = file.getActualValue(in);
                             outPoints.add(out);
-                            System.out.println(out);// Dung edit
-                        }    
+                            //System.out.println(out);// Dung edit
+                        }
+                        */  
                         System.out.println(outPoints);
                         for (Class<? extends Model> c : Benchmark.discoverModels()) {
                             if (c.equals(UserFunction.class))
