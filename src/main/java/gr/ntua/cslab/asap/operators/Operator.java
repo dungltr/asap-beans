@@ -126,13 +126,14 @@ public class Operator {
                         CSVFileManager file = new CSVFileManager();
                         file.setFilename(directory + "/data/" + e.getKey() + ".csv");
                         //////Dung edit to put DREAM in this step
-                        String fileName = directory + "/data/" + e.getKey() + ".csv";
+                        /*String fileName = directory + "/data/" + e.getKey() + ".csv";
                         double R_2_limit = 0.8;
                         double [][] realValue = readMatrix(fileName, 1);
                         int variables = realValue[0].length - 1;
                         int Max_line_estimate = estimateSizeOfMatrix(CsvFileReader.count(fileName)-1,variables,fileName,R_2_limit);
                         System.out.println("the maximum line for UserFunction is: " + Max_line_estimate);
                         System.out.println("la la la");
+                        */
                         ////////////Dung edit is finish to put DREAM
                         
                         for (InputSpacePoint in : file.getInputSpacePoints()) {
@@ -1059,7 +1060,17 @@ public class Operator {
 		}
 		logger.info("Model selected: " + model.getClass());
 		System.out.println("Model selected: " + model.getClass());
-
+                //////Dung edit to put DREAM in this step
+                if(model.getClass().equals(gr.ntua.ece.cslab.panic.core.models.LinearRegression.UserFunction)){
+                    String fileName = directory + "/data/" + metric + ".csv";
+                    double R_2_limit = 0.8;
+                    double [][] realValue = readMatrix(fileName, 1);
+                    int variables = realValue[0].length - 1;
+                    int Max_line_estimate = estimateSizeOfMatrix(CsvFileReader.count(fileName)-1,variables,fileName,R_2_limit);
+                    System.out.println("the maximum line for UserFunction is: " + Max_line_estimate);
+                    System.out.println("la la la");
+                }
+                ////////////Dung edit is finish to put DREAM
 		//System.out.println(opName);
 		//System.out.println("inputs: "+inputs);
 
