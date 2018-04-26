@@ -139,8 +139,8 @@ public class Operator {
                         double [][] realValue = ReadMatrixCSV.readMatrix(fileName, maxLine);
                         dream.printMatrix(realValue);
                         double [] M = {maxLine};
-                        dream.updateParameter(fileName.replace(".csv","")+"_maxDream.csv",M);
-                        Writematrix2CSV.writeMatrix2Csv(fileName.replace(".csv","")+"_tmpDream.csv", realValue);
+                        dream.updateParameter(fileName.replace(".csv","_maxDream.csv"),M);
+                        Writematrix2CSV.writeMatrix2Csv(fileName.replace(".csv","_tmpDream.csv"), realValue);
                         System.out.println("the maximum line for UserFunction is: " + maxLine);                      
                         System.out.println("ha ha ha");
                         CSVFileManager fileDung = new CSVFileManager();
