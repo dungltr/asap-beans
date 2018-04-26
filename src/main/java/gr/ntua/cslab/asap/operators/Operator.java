@@ -129,13 +129,12 @@ public class Operator {
                         //////Dung edit to put DREAM in this step
                         System.out.println("first lol");
                         System.out.println("directory:= " +Library + "/"+ directory);
-                        String fileName = Library + "/"+ directory + "/data/" + e.getKey() + ".csv";
+                        String fileName = Library + "/"+ directory + "/data/" + e.getKey() + "_realValue.csv";
                         double R_2_limit = 0.8;
-                        System.out.println("fileName:= " + fileName);
-                        
+                        System.out.println("fileName:= " + fileName);                      
                         double [][] testVariable = ReadMatrixCSV.readMatrix(fileName, 1);
                         int variables = testVariable[0].length - 1;
-                        int maxLine = dream.estimateSizeOfMatrix(CsvFileReader.count(fileName)-1,variables,fileName,R_2_limit);
+                        int maxLine = dream.estimateSizeOfMatrix(CsvFileReader.count(fileName),variables,fileName,R_2_limit);
                         double [][] realValue = ReadMatrixCSV.readMatrix(fileName, maxLine);
                         dream.printMatrix(realValue);
                         double [] M = {maxLine};
