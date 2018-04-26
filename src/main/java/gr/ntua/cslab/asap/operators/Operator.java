@@ -127,6 +127,7 @@ public class Operator {
                         CSVFileManager file = new CSVFileManager();
                         file.setFilename(directory + "/data/" + e.getKey() + ".csv");
                         //////Dung edit to put DREAM in this step
+                        /*
                         System.out.println("first lol");
                         System.out.println("directory:= " +Library + "/"+ directory);
                         String fileName = Library + "/"+ directory + "/data/" + e.getKey() + "_realValue.csv";
@@ -148,15 +149,16 @@ public class Operator {
                             OutputSpacePoint out = fileDung.getActualValue(in);
                             outPoints.add(out);
                             System.out.println(out);// Dung edit
-                        }                   
+                        } 
+                        */
                         ////////////Dung edit is finish to put DREAM                       
-                        /* 
+                         
                         for (InputSpacePoint in : file.getInputSpacePoints()) {
                             OutputSpacePoint out = file.getActualValue(in);
                             outPoints.add(out);
                             //System.out.println(out);// Dung edit
                         }
-                        */  
+                         
                         System.out.println(outPoints);
                         for (Class<? extends Model> c : Benchmark.discoverModels()) {
                             if (c.equals(UserFunction.class))
