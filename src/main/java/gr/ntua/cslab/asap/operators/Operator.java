@@ -147,7 +147,7 @@ public class Operator {
                         for (InputSpacePoint in : fileDung.getInputSpacePoints()) {
                             OutputSpacePoint out = fileDung.getActualValue(in);
                             outPoints.add(out);
-                            //System.out.println(out);// Dung edit
+                            System.out.println(out);// Dung edit
                         }                   
                         ////////////Dung edit is finish to put DREAM                       
                         /* 
