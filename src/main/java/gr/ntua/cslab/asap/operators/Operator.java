@@ -143,7 +143,7 @@ public class Operator {
                         System.out.println("the maximum line for UserFunction is: " + maxLine);                      
                         System.out.println("ha ha ha");
                         CSVFileManager fileDung = new CSVFileManager();
-                        fileDung.setFilename(directory + "/data/" + e.getKey() + "_tmpDream.csv");
+                        fileDung.setFilename(fileName.replace(".csv", "_tmpDream.csv"));
                         for (InputSpacePoint in : fileDung.getInputSpacePoints()) {
                             OutputSpacePoint out = fileDung.getActualValue(in);
                             outPoints.add(out);
