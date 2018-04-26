@@ -131,6 +131,7 @@ public class Operator {
                         double [][] realValue = readMatrix(fileName, 1);
                         int variables = realValue[0].length - 1;
                         int Max_line_estimate = estimateSizeOfMatrix(CsvFileReader.count(fileName)-1,variables,fileName,R_2_limit);
+                        System.out.println("the maximum line for UserFunction is: " + Max_line_estimate);
                         ////////////Dung edit is finish to put DREAM
                         
                         for (InputSpacePoint in : file.getInputSpacePoints()) {
