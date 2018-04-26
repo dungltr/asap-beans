@@ -126,14 +126,17 @@ public class Operator {
                         CSVFileManager file = new CSVFileManager();
                         file.setFilename(directory + "/data/" + e.getKey() + ".csv");
                         //////Dung edit to put DREAM in this step
-                        /*String fileName = directory + "/data/" + e.getKey() + ".csv";
+                        System.out.println("first lol");
+                        System.out.println("directory:= " +Library + "/"+ directory);
+                        String fileName = Library + "/"+ directory + "/data/" + e.getKey() + ".csv";
                         double R_2_limit = 0.8;
-                        double [][] realValue = readMatrix(fileName, 1);
+                        System.out.println("fileName:= " + fileName);
+                        double [][] realValue = ReadMatrixCSV.readMatrix(fileName, 1);
+                        dream.printMatrix(realValue);
                         int variables = realValue[0].length - 1;
-                        int Max_line_estimate = estimateSizeOfMatrix(CsvFileReader.count(fileName)-1,variables,fileName,R_2_limit);
+                        int Max_line_estimate = dream.estimateSizeOfMatrix(CsvFileReader.count(fileName)-1,variables,fileName,R_2_limit);
                         System.out.println("the maximum line for UserFunction is: " + Max_line_estimate);
-                        System.out.println("la la la");
-                        */
+                        System.out.println("ha ha ha");
                         ////////////Dung edit is finish to put DREAM
                         
                         for (InputSpacePoint in : file.getInputSpacePoints()) {
@@ -1060,7 +1063,7 @@ public class Operator {
 		}
                 else {
                     //////Dung edit to put DREAM in this step
-                    System.out.println("first lol");
+                    /*System.out.println("first lol");
                     System.out.println("directory:= " +Library + "/"+ directory);
                     String fileName = Library + "/"+ directory + "/data/" + metric + ".csv";
                     double R_2_limit = 0.8;
@@ -1071,6 +1074,7 @@ public class Operator {
                     int Max_line_estimate = dream.estimateSizeOfMatrix(CsvFileReader.count(fileName)-1,variables,fileName,R_2_limit);
                     System.out.println("the maximum line for UserFunction is: " + Max_line_estimate);
                     System.out.println("ha ha ha");
+                */
                 ////////////Dung edit is finish to put DREAM
                 }
 		logger.info("Model selected: " + model.getClass());
