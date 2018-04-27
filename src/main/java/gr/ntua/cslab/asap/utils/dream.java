@@ -8,9 +8,14 @@ package gr.ntua.cslab.asap.utils;
 import java.io.IOException;
 import gr.ntua.cslab.asap.utils.ReadMatrixCSV;
 import static gr.ntua.cslab.asap.utils.ReadMatrixCSV.readMatrix;
+import gr.ntua.ece.cslab.panic.core.containers.beans.InputSpacePoint;
+import gr.ntua.ece.cslab.panic.core.containers.beans.OutputSpacePoint;
+import gr.ntua.ece.cslab.panic.core.utils.CSVFileManager;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -430,5 +435,42 @@ public class dream {
             Files.createFile(filePath);
         }
         Writematrix2CSV.addArray2Csv(filename, b); 
+    }
+
+    public static List<OutputSpacePoint> runDream(String Library, String directory, String key) throws IOException {
+        List<OutputSpacePoint> outPoints = new ArrayList<>();
+        System.out.println("first lol");
+        System.out.println("directory:= " +Library + "/"+ directory);
+        String fileName = Library + "/"+ directory + "/data/" + key + "_realValue.csv";
+        double R_2_limit = 0.8;
+        System.out.println("fileName:= " + fileName);                      
+        double [][] testVariable = ReadMatrixCSV.readMatrix(fileName, 1);
+        int variables = testVariable[0].length - 1;
+        int maxLine = dream.estimateSizeOfMatrix(CsvFileReader.count(fileName),variables,fileName,R_2_limit);
+        double [][] realValue = ReadMatrixCSV.readMatrix(fileName, maxLine);
+        dream.printMatrix(realValue);
+        double [] M = {maxLine};
+        updateParameter(fileName.replace(".csv","_maxDream.csv"),M);
+        Writematrix2CSV.writeMatrix2Csv(fileName.replace(".csv","_tmpDream.csv"), realValue);
+        System.out.println("the maximum line for UserFunction is: " + maxLine);                      
+        System.out.println("ha ha ha");
+        CSVFileManager fileDung = new CSVFileManager();
+        fileDung.setFilename(fileName.replace(".csv", "_tmpDream.csv"));
+        for (InputSpacePoint in : fileDung.getInputSpacePoints()) {
+            OutputSpacePoint out = fileDung.getActualValue(in);
+            outPoints.add(out);
+            System.out.println(out);// Dung edit
+        } 
+        return outPoints;      
+    }
+
+    public static List<OutputSpacePoint> oldRun(CSVFileManager file) {
+        List<OutputSpacePoint> outPoints = new ArrayList<>();
+        for (InputSpacePoint in : file.getInputSpacePoints()) {
+            OutputSpacePoint out = file.getActualValue(in);
+            outPoints.add(out);
+            System.out.println(out);// Dung edit
+        }
+        return outPoints; 
     }
 }
