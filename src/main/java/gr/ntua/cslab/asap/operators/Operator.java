@@ -125,8 +125,9 @@ public class Operator {
                         //this.initializeDatasource();
                         //outPoints = dataSource.getOutputSpacePoints(e.getKey());
                         CSVFileManager file = new CSVFileManager();
-                        file.setFilename(directory + "/data/" + e.getKey() + "_realValue.csv");
+                        file.setFilename(directory + "/data/" + e.getKey() + ".csv");
                         //////Dung edit to put DREAM in this step
+                        //outPoints = dream.runDream(Library,directory,e.getKey());
                         /*
                         System.out.println("first lol");
                         System.out.println("directory:= " +Library + "/"+ directory);
@@ -151,14 +152,15 @@ public class Operator {
                             System.out.println(out);// Dung edit
                         } 
                         */
-                        ////////////Dung edit is finish to put DREAM                       
-                         
+                        ////////////Dung edit is finish to put DREAM
+                        outPoints = dream.oldRun(file);
+                        /*
                         for (InputSpacePoint in : file.getInputSpacePoints()) {
                             OutputSpacePoint out = file.getActualValue(in);
                             outPoints.add(out);
                             //System.out.println(out);// Dung edit
                         }
-                         
+                        */
                         System.out.println(outPoints);
                         for (Class<? extends Model> c : Benchmark.discoverModels()) {
                             if (c.equals(UserFunction.class))
