@@ -439,13 +439,14 @@ public class dream {
 
     public static List<OutputSpacePoint> runDream(String Library, String directory, String key) throws IOException {
         List<OutputSpacePoint> outPoints = new ArrayList<>();
-        System.out.println("first lol");
         System.out.println("directory:= " +Library + "/"+ directory);
         String fileName = Library + "/"+ directory + "/data/" + key + ".csv";
         double R_2_limit = 0.8;
         System.out.println("fileName:= " + fileName);                      
         double [][] testVariable = ReadMatrixCSV.readMatrix(fileName, 2);
+        printMatrix(testVariable);
         int variables = testVariable[testVariable.length-1].length - 1;
+        System.out.println("the number of variables is: "+ variables);
         int maxLine = dream.estimateSizeOfMatrix(CsvFileReader.count(fileName),variables,fileName,R_2_limit);
         double [][] realValue = ReadMatrixCSV.readMatrix(fileName, maxLine);
         dream.printMatrix(realValue);
