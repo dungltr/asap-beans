@@ -23,16 +23,16 @@ import java.util.List;
  */
 public class dream {
     public static String fileParameter (String file){
-        return file.replace(".csv","_") + "Parameter" + ".csv";
+        return file.replace(".csv","_") + "parameter" + ".csv";
     }
     public static String fileRealValue (String file){
-        return file.replace(".csv","_") + "RealValue" + ".csv";
+        return file.replace(".csv","_") + "realValue" + ".csv";
     }
     public static String fileEstimateValue (String file){
-        return file.replace(".csv","_") + "EstimateValue" + ".csv";
+        return file.replace(".csv","_") + "estimateValue" + ".csv";
     }
     public static String fileErrorValue (String file){
-        return file.replace(".csv","_") + "Error" + ".csv";
+        return file.replace(".csv","_") + "error" + ".csv";
     }
   
     public static int estimateSizeOfMatrix(int Max_Line, int numberOfVariable, String file, double R_2_limit) throws IOException {
@@ -441,7 +441,7 @@ public class dream {
         List<OutputSpacePoint> outPoints = new ArrayList<>();
         System.out.println("first lol");
         System.out.println("directory:= " +Library + "/"+ directory);
-        String fileName = Library + "/"+ directory + "/data/" + key + "_realValue.csv";
+        String fileName = Library + "/"+ directory + "/data/" + key + ".csv";
         double R_2_limit = 0.8;
         System.out.println("fileName:= " + fileName);                      
         double [][] testVariable = ReadMatrixCSV.readMatrix(fileName, 1);
