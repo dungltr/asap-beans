@@ -444,8 +444,8 @@ public class dream {
         String fileName = Library + "/"+ directory + "/data/" + key + ".csv";
         double R_2_limit = 0.8;
         System.out.println("fileName:= " + fileName);                      
-        double [][] testVariable = ReadMatrixCSV.readMatrix(fileName, 1);
-        int variables = testVariable[0].length - 1;
+        double [][] testVariable = ReadMatrixCSV.readMatrix(fileName, 2);
+        int variables = testVariable[testVariable.length-1].length - 1;
         int maxLine = dream.estimateSizeOfMatrix(CsvFileReader.count(fileName),variables,fileName,R_2_limit);
         double [][] realValue = ReadMatrixCSV.readMatrix(fileName, maxLine);
         dream.printMatrix(realValue);
