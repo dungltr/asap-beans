@@ -105,7 +105,8 @@ public class Writematrix2CSV {
             Path filePath = Paths.get(filename);
             if (Files.exists(filePath)) Files.delete(filePath);       
             Files.createFile(filePath);
-            double[] abc = new double[tmp[0].length];         
+            double[] abc = new double[tmp[0].length];  
+            addArray2Csv(filename, abc);
             for (int i = 0; tmp.length > i; i++)
             {
                 for (int j = 0; tmp[0].length > j; j++)
