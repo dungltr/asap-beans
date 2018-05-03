@@ -106,7 +106,7 @@ public class Operator {
                         file.setFilename(directory + "/data/" + e.getKey() + "_realValue.csv");
                         //file.setFilename(directory + "/data/" + e.getKey() + ".csv");
                         //////Dung edit to put DREAM in this step
-                        //outPoints = dream.runDream(Library,directory,e.getKey());
+                        outPoints = dream.runDream(Library,directory,e.getKey());
                         /*
                         System.out.println("first lol");
                         System.out.println("directory:= " +Library + "/"+ directory);
@@ -132,7 +132,7 @@ public class Operator {
                         } 
                         */
                         ////////////Dung edit is finish to put DREAM
-                        outPoints = dream.oldRun(file);
+                        //outPoints = dream.oldRun(file);
                         /*
                         for (InputSpacePoint in : file.getInputSpacePoints()) {
                             OutputSpacePoint out = file.getActualValue(in);
