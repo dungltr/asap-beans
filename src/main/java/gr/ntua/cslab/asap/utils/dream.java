@@ -83,7 +83,8 @@ public class dream {
             //System.out.println("\nMatrix c");
             c = setupMatrixC(realValue);
             d = setupMatrixC(estimateValue);
-            //System.out.println("length of C: "+c.length);
+            System.out.println("length of C: "+c.length);
+            System.out.println("length of C: "+d.length);
             B = multiply(multiply(invert(multiply(transpose(a),a)),transpose(a)),c);
             for (int k = 0; k < B.length; k++){
                 if (Double.isNaN(B[k])) {
