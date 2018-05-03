@@ -69,10 +69,12 @@ public class dream {
             if (realValue.length < estimateValue.length) {
                 c = new double[realValue.length];
                 d = new double[realValue.length];
+                System.out.println("Setup c and d with realValue: "+realValue.length + " and M:= "+M );
             }
             else {
                 c = new double[estimateValue.length];
                 d = new double[estimateValue.length];
+                System.out.println("Setup c and d with realValue: "+estimateValue.length + " and M:= "+M );
             }
             //System.out.println("length of D: "+d.length);
             //System.out.println("\nMatrix Real Value");
@@ -84,7 +86,7 @@ public class dream {
             c = setupMatrixC(realValue);
             d = setupMatrixC(estimateValue);
             System.out.println("length of C: "+c.length);
-            System.out.println("length of C: "+d.length);
+            System.out.println("length of D: "+d.length);
             B = multiply(multiply(invert(multiply(transpose(a),a)),transpose(a)),c);
             for (int k = 0; k < B.length; k++){
                 if (Double.isNaN(B[k])) {
