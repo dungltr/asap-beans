@@ -39,7 +39,7 @@ public class dream {
         String fileParameter = fileParameter(file);
         String fileRealValue = fileRealValue(file);
         String fileEstimate = fileEstimateValue(file);
-        int Max_Estimate = CsvFileReader.count(file)-1;
+        int Max_Estimate = CsvFileReader.count(fileRealValue);
         int MaxOfLine;
         if (Max_Estimate < Max_Line)
             MaxOfLine = Max_Estimate;
