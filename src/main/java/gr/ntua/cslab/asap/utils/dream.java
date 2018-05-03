@@ -107,11 +107,11 @@ public class dream {
             double SST = 0;
             double SSE = 0;
             double SSY = 0;
-
+            System.out.println("\na Checking: c.length =d.length:" + c.length + "=" + d.length);
             for (int k = 0; k < c.length; k++) {
                 SSE = SSE + (c[k]-d[k])*(c[k]-d[k]);
             }
-            //System.out.println("\na SSE Value: " + SSE);
+            System.out.println("\na SSE Value: " + SSE);
             for (int k = 0; k < c.length; k++){
                 SSY = SSY + (c[k]-average)*(c[k]-average);
             }
@@ -447,6 +447,7 @@ public class dream {
         printMatrix(testVariable);
         int variables = testVariable[testVariable.length-1].length - 1;
         System.out.println("the number of variables is: "+ variables);
+        
         int maxLine = dream.estimateSizeOfMatrix(CsvFileReader.count(fileName),variables,fileName,R_2_limit);
         System.out.println("the number of maxLine is: "+ maxLine);
         double [][] realValue = ReadMatrixCSV.readMatrix(fileName, maxLine);
