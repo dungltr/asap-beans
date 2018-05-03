@@ -103,8 +103,8 @@ public class Operator {
                         //this.initializeDatasource();
                         //outPoints = dataSource.getOutputSpacePoints(e.getKey());
                         CSVFileManager file = new CSVFileManager();
-                        file.setFilename(directory + "/data/" + e.getKey() + "_realValue.csv");
-                        //file.setFilename(directory + "/data/" + e.getKey() + ".csv");
+                        //file.setFilename(directory + "/data/" + e.getKey() + "_realValue.csv");
+                        file.setFilename(directory + "/data/" + e.getKey() + ".csv");
                         //////Dung edit to put DREAM in this step
                         outPoints = dream.runDream(Library,directory,e.getKey());
                         /*
