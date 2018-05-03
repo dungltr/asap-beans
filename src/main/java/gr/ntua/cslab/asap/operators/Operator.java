@@ -20,45 +20,23 @@ package gr.ntua.cslab.asap.operators;
 import gr.ntua.cslab.asap.optimization.ML;
 import gr.ntua.cslab.asap.optimization.OptimizeMissingMetrics;
 import gr.ntua.cslab.asap.rest.beans.OperatorDescription;
-import gr.ntua.cslab.asap.utils.DataSource;
-import gr.ntua.cslab.asap.utils.MongoDB;
-import gr.ntua.cslab.asap.utils.ReadFile;
-import gr.ntua.cslab.asap.utils.Utils;
-import gr.ntua.cslab.asap.utils.CsvFileReader;
-import gr.ntua.cslab.asap.utils.ReadMatrixCSV;
-import gr.ntua.cslab.asap.utils.Writematrix2CSV;
-import gr.ntua.cslab.asap.utils.dream;
+import gr.ntua.cslab.asap.utils.*;
 import gr.ntua.cslab.asap.workflow.WorkflowNode;
 import gr.ntua.ece.cslab.panic.core.client.Benchmark;
 import gr.ntua.ece.cslab.panic.core.containers.beans.InputSpacePoint;
 import gr.ntua.ece.cslab.panic.core.containers.beans.OutputSpacePoint;
-import gr.ntua.ece.cslab.panic.core.models.AbstractWekaModel;
-import gr.ntua.ece.cslab.panic.core.models.LeastSquares;
-import gr.ntua.ece.cslab.panic.core.models.GaussianCurves;
-import gr.ntua.ece.cslab.panic.core.models.IsoRegression;
-import gr.ntua.ece.cslab.panic.core.models.MLPerceptron;
-import gr.ntua.ece.cslab.panic.core.models.RBF;
-import gr.ntua.ece.cslab.panic.core.models.Model;
-import gr.ntua.ece.cslab.panic.core.models.RandomCommittee;
-import gr.ntua.ece.cslab.panic.core.models.UserFunction;
+import gr.ntua.ece.cslab.panic.core.models.*;
 import gr.ntua.ece.cslab.panic.core.samplers.Sampler;
 import gr.ntua.ece.cslab.panic.core.samplers.UniformSampler;
 import gr.ntua.ece.cslab.panic.core.utils.CSVFileManager;
 import net.sourceforge.jeval.EvaluationException;
 import net.sourceforge.jeval.Evaluator;
+import org.apache.commons.io.FileUtils;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Properties;
 import java.util.logging.Logger;
-
-import java.io.IOException;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.ObjectUtils.Null;
 
 
 public class Operator {
@@ -125,7 +103,7 @@ public class Operator {
                         //this.initializeDatasource();
                         //outPoints = dataSource.getOutputSpacePoints(e.getKey());
                         CSVFileManager file = new CSVFileManager();
-                        file.setFilename(directory + "/data/" + e.getKey() + ".csv");
+                        file.setFilename(directory + "/data/" + e.getKey() + "_realValue.csv");
                         //////Dung edit to put DREAM in this step
                         //outPoints = dream.runDream(Library,directory,e.getKey());
                         /*
