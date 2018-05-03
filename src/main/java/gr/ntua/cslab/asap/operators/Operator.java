@@ -246,38 +246,38 @@ public class Operator {
 	 * @throws Exception
 	 */
 	public void configureModel() throws Exception {
-		System.out.println("Begining Configuring model: ");
-		String modelClass;
-		List<Model> performanceModels;
-        List<OutputSpacePoint> outPoints = new ArrayList<>();
-		inputSpace = new HashMap<String, String>();
-		outputSpace = new HashMap<String, String>();
+            System.out.println("Begining Configuring model: ");
+            String modelClass;
+            List<Model> performanceModels;
+            List<OutputSpacePoint> outPoints = new ArrayList<>();
+            inputSpace = new HashMap<String, String>();
+            outputSpace = new HashMap<String, String>();
 		/* vpapa: Optimization.inputSpace and Optimization.outputSpace are mandatory
 			fields of an operator description file
 		*/
-		try{
-			if(optree.getNode("Optimization.inputSpace")!=null)
-				optree.getNode("Optimization.inputSpace").toKeyValues("", inputSpace);
-			if(optree.getNode("Optimization.outputSpace")!=null)
-				optree.getNode("Optimization.outputSpace").toKeyValues("", outputSpace);
-		}
-		catch( NullPointerException npe ){
-			System.out.println( "ERROR: From operator " + opName + "'s description file either"
-								+ " Optimization.inputSpace or Optimization.outputSpace"
-								+ " parameter or both are missing. Add them appropriately.");
-			logger.info( "ERROR: From operator " + opName + "'s description file either"
-								+ " Optimization.inputSpace or Optimization.outputSpace"
-								+ " parameter or both are missing. Add them appropriately.");
-			npe.printStackTrace();
-		}
+            try{
+                if(optree.getNode("Optimization.inputSpace")!=null)
+                        optree.getNode("Optimization.inputSpace").toKeyValues("", inputSpace);
+                if(optree.getNode("Optimization.outputSpace")!=null)
+                        optree.getNode("Optimization.outputSpace").toKeyValues("", outputSpace);
+            }
+            catch( NullPointerException npe ){
+                    System.out.println( "ERROR: From operator " + opName + "'s description file either"
+                                                            + " Optimization.inputSpace or Optimization.outputSpace"
+                                                            + " parameter or both are missing. Add them appropriately.");
+                    logger.info( "ERROR: From operator " + opName + "'s description file either"
+                                                            + " Optimization.inputSpace or Optimization.outputSpace"
+                                                            + " parameter or both are missing. Add them appropriately.");
+                    npe.printStackTrace();
+            }
 
-		inputSource = optree.getParameter("Optimization.inputSource.type");
-		minTotalError = Double.MAX_VALUE;
+            inputSource = optree.getParameter("Optimization.inputSource.type");
+            minTotalError = Double.MAX_VALUE;
 
-		logger.info("Metrics for operator " + opName);
-		for (String metric : outputSpace.keySet()) {
-			logger.info("--"+metric);
-		}
+            logger.info("Metrics for operator " + opName);
+            for (String metric : outputSpace.keySet()) {
+                    logger.info("--"+metric);
+            }
 
 		for (Entry<String, String> e : outputSpace.entrySet()) {
 			Model bestModel = null;
@@ -334,7 +334,7 @@ public class Operator {
 						}
 					}
 				}
-					else { //Dung edit to build model every loop
+                                else { //Dung edit to build model every loop
 					System.out.println("Bulding model for metric: " + metricName + " for operator " + opName);
 					logger.info("Bulding model for metric: " + metricName + " for operator " + opName);
 					int i = 0;
@@ -346,8 +346,8 @@ public class Operator {
                         outPoints = dataSource.getOutputSpacePoints(e.getKey());
                     }
                     else {
-						logger.info("The datasource for metric " + metricName +
-								" of operator " + opName + " is CSV");
+                        logger.info("The datasource for metric " + metricName +
+                                    " of operator " + opName + " is CSV");
 
                         CSVFileManager file = new CSVFileManager();
                         file.setFilename(directory + "/data/" + e.getKey() + ".csv");
@@ -357,7 +357,7 @@ public class Operator {
                             outPoints.add(out);
                         }
                         */
-                        outPoints = dream.oldRun(file);
+                        //outPoints = dream.oldRun(file);
                         outPoints = dream.runDream(Library,directory,e.getKey());// Dung edit
                         
                     }
