@@ -7,7 +7,7 @@ package gr.ntua.cslab.asap.utils;
 
 import java.io.IOException;
 import gr.ntua.cslab.asap.utils.ReadMatrixCSV;
-import static gr.ntua.cslab.asap.utils.ReadMatrixCSV.readMatrix;
+//import static gr.ntua.cslab.asap.utils.ReadMatrixCSV.readMatrix;
 import gr.ntua.ece.cslab.panic.core.containers.beans.InputSpacePoint;
 import gr.ntua.ece.cslab.panic.core.containers.beans.OutputSpacePoint;
 import gr.ntua.ece.cslab.panic.core.utils.CSVFileManager;
@@ -59,10 +59,10 @@ public class dream {
         int sizeOfMatrix = Max_Line;
         while(((Math.abs(R_2_2)< R_2_limit)||(Math.abs(R_2_2)> 1))&&(M < MaxOfLine))
         {   //System.out.println("\nMatrix Real Value");
-            realValue = readMatrix(fileRealValue, M);
+            realValue = ReadMatrixCSV.readMatrix(fileRealValue, M);
             //System.out.println("\nMatrix Estimate Value");
-            estimateValue = readMatrix(fileEstimate, M);
-            Parameter = readMatrix(fileParameter, M);
+            estimateValue = ReadMatrixCSV.readMatrix(fileEstimate, M);
+            Parameter = ReadMatrixCSV.readMatrix(fileParameter, M);
             x = new double[realValue.length][realValue[0].length - 1];
             a = new double[realValue.length][realValue[0].length];
             B = new double[realValue[0].length];
@@ -448,6 +448,7 @@ public class dream {
         int variables = testVariable[testVariable.length-1].length - 1;
         System.out.println("the number of variables is: "+ variables);
         int maxLine = dream.estimateSizeOfMatrix(CsvFileReader.count(fileName),variables,fileName,R_2_limit);
+        System.out.println("the number of maxLine is: "+ maxLine);
         double [][] realValue = ReadMatrixCSV.readMatrix(fileName, maxLine);
         dream.printMatrix(realValue);
         double [] M = {maxLine};
