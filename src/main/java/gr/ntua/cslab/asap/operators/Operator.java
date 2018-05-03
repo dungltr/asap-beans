@@ -106,6 +106,7 @@ public class Operator {
                         //file.setFilename(directory + "/data/" + e.getKey() + "_realValue.csv");
                         file.setFilename(directory + "/data/" + e.getKey() + ".csv");
                         //////Dung edit to put DREAM in this step
+                        System.out.println("Start at line 109");
                         outPoints = dream.runDream(Library,directory,e.getKey());
                         /*
                         System.out.println("first lol");
@@ -358,6 +359,7 @@ public class Operator {
                         }
                         */
                         //outPoints = dream.oldRun(file);
+                        System.out.println("Start at line 360");
                         outPoints = dream.runDream(Library,directory,e.getKey());// Dung edit
                         
                     }
