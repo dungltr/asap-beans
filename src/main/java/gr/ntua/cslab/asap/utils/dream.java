@@ -40,10 +40,13 @@ public class dream {
         String fileRealValue = fileRealValue(file);
         String fileEstimate = fileEstimateValue(file);
         int Max_Estimate = CsvFileReader.count(fileRealValue);
+        System.out.println("The Max_Estimate of CsvFileReader.count(fileRealValue) line is:" + Max_Estimate);
+        System.out.println("The Max_Line is:=" + Max_Line);
         int MaxOfLine;
         if (Max_Estimate < Max_Line)
             MaxOfLine = Max_Estimate;
         else MaxOfLine = Max_Line;
+        System.out.println("The Max of line is:" + MaxOfLine);
         int M = numberOfVariable + 2;
         double R_2 = 0;
         double R_2_2 = 0;
@@ -57,8 +60,9 @@ public class dream {
         double[] c;// = new double[realValue.length];
         double[] d;// = new double[realValue.length];
         int sizeOfMatrix = Max_Line;
-        while(((Math.abs(R_2_2)< R_2_limit)||(Math.abs(R_2_2)> 1))&&(M < MaxOfLine))
-        {   //System.out.println("\nMatrix Real Value");
+        while(((Math.abs(R_2_2)< R_2_limit)||(Math.abs(R_2_2)> 1))&&(M < MaxOfLine)){
+            System.out.println("The Max of line is:" + MaxOfLine);
+            System.out.println("The M of line is:" + M);
             realValue = ReadMatrixCSV.readMatrix(fileRealValue, M);
             //System.out.println("\nMatrix Estimate Value");
             estimateValue = ReadMatrixCSV.readMatrix(fileEstimate, M);
