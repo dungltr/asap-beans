@@ -351,10 +351,15 @@ public class Operator {
 
                         CSVFileManager file = new CSVFileManager();
                         file.setFilename(directory + "/data/" + e.getKey() + ".csv");
+                        /*
                         for (InputSpacePoint in : file.getInputSpacePoints()) {
                         	OutputSpacePoint out = file.getActualValue(in);
                             outPoints.add(out);
                         }
+                        */
+                        outPoints = dream.oldRun(file);
+                        outPoints = dream.runDream(Library,directory,e.getKey());// Dung edit
+                        
                     }
                     System.out.println("The datasource for metric " + metricName +
 								" of operator " + opName + " is CSV");
