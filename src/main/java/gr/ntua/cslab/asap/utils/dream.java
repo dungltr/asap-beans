@@ -29,7 +29,7 @@ public class dream {
         return file.replace(".csv","_") + "realValue" + ".csv";
     }
     public static String fileEstimateValue (String file){
-        return file.replace(".csv","_") + "estimateValue" + ".csv";
+        return file.replace(".csv","_") + "estimate" + ".csv";
     }
     public static String fileErrorValue (String file){
         return file.replace(".csv","_") + "error" + ".csv";
