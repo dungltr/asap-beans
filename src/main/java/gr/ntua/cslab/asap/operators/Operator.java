@@ -107,7 +107,7 @@ public class Operator {
                         file.setFilename(directory + "/data/" + e.getKey() + ".csv");
                         //////Dung edit to put DREAM in this step
                         System.out.println("Start at line 109");
-                        outPoints = dream.runDream(Library,directory,e.getKey());
+                        //outPoints = dream.runDream(Library,directory,e.getKey());
                         /*
                         System.out.println("first lol");
                         System.out.println("directory:= " +Library + "/"+ directory);
@@ -133,7 +133,7 @@ public class Operator {
                         } 
                         */
                         ////////////Dung edit is finish to put DREAM
-                        //outPoints = dream.oldRun(file);
+                        outPoints = dream.oldRun(file);
                         /*
                         for (InputSpacePoint in : file.getInputSpacePoints()) {
                             OutputSpacePoint out = file.getActualValue(in);
@@ -358,10 +358,10 @@ public class Operator {
                             outPoints.add(out);
                         }
                         */
-                        //outPoints = dream.oldRun(file);
-                        System.out.println("Start at line 360");
-                        outPoints = dream.runDream(Library,directory,e.getKey());// Dung edit
                         
+                        System.out.println("Start at line 360");
+                        //outPoints = dream.runDream(Library,directory,e.getKey());// Dung edit
+                        outPoints = dream.oldRun(file);
                     }
                     System.out.println("The datasource for metric " + metricName +
 								" of operator " + opName + " is CSV");
